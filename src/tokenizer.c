@@ -74,9 +74,15 @@ char **tokenize(char *str) {
 }
 
 void print_tokens(char **tokens) {
-  if(!tokens) printf("No tokens\n"); return;
-  while(*tokens) {
-    printf("%s ", *tokens);
-    tokens++;
+  if(!tokens) {
+    printf("No tokens entered!");
+    goto exit;
   }
+
+  for(int i = 0; *tokens; tokens++) {
+    printf("%s ", *tokens);
+  }
+
+ exit:
+  return;
 }

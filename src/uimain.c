@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tokenizer.h"
+#include "history.h"
 
 int main() {
   char input[30];
@@ -14,5 +15,10 @@ int main() {
   char **toke = tokenize(updStr);
   free(updStr);
   print_tokens(toke);
+  List* newList = init_history();
+  add_history(newList, "Hello");
+  add_history(newList, "World");
+  print_history(newList);
+  printf("%s", get_history(newList, 1));
   return 1;
 }
