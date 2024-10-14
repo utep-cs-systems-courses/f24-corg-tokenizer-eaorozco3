@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "tokenizer.h"
 
-// Return true if either whitespace or tab.
 int space_char(char c) {
   if(c == ' ' || c == '\t') return 1;
   return 0;
@@ -13,6 +12,7 @@ int non_space_char(char c) {
   return 1;
 }
 
+// Return a pointer to first non-space character in string.
 char *token_start(char *str) {
   for( ; *str; str++) {
     if(non_space_char(*str)) return str;
@@ -21,6 +21,7 @@ char *token_start(char *str) {
   return 0;
 }
 
+// Return a pointer to first space or terminator character.
 char *token_terminator(char *token) {
   for( ; token; token++) {
     if(space_char(*token) || *token == '\0') return token;
@@ -29,6 +30,7 @@ char *token_terminator(char *token) {
   return 0;
 }
 
+// Iterate through string and count strings by counting start and end. If empty, return 0.
 int count_tokens(char *str) {
   if(!str) return 0;
   int count = 0;
@@ -42,6 +44,7 @@ int count_tokens(char *str) {
   return count;
 }
 
+// Create a new string and copy contents to other string.
 char *copy_str(char *inStr, short len) {
   if(!count_tokens(inStr)) return 0;
   char *newStr = malloc(len);
@@ -50,6 +53,7 @@ char *copy_str(char *inStr, short len) {
     *(newStr + i) = *(inStr + i);
   }
 
+  // Most of the time, allocates space is too much, so reallocate the space.
   char *retStr = realloc(newStr, i);
   *(retStr + i) = '\0';
   return retStr;
@@ -84,5 +88,15 @@ void print_tokens(char **tokens) {
   }
 
  exit:
+  return;
+}
+
+// Free all tokens and the pointer that points to them.
+void free_tokens(char **tokens) {
+  for(; tokens; tokens++) {
+    free(*tokens);
+  }
+
+  free(tokens);
   return;
 }
